@@ -4,7 +4,7 @@ app = Flask("Temperature Converter")
 
 @app.route("/")
 def home():
-    print("This is your home page.")
+    return "This is your home page."
 
 @app.route("/converter")
 def converter():
@@ -17,7 +17,7 @@ def converter():
         celsiusResult = (temperature - 32) * 5/9
         return f"{celsiusResult} degrees Celsius"
     else:
-        print("Invalid Unit")
+        return "Invalid Unit"
 
 if __name__ == "__main__":
     app.run()
