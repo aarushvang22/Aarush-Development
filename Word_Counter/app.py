@@ -9,11 +9,10 @@ def home():
 @app.route("/counter")
 def counter():
     text = request.args.get("text", "")
+    text = text.strip()
     words = text.split(" ")
     counter = len(words)
-    for i in range(counter):
-        numberOfWords = counter + i
-        return f"There are {numberOfWords} words in this string."
+    return f"There are {counter} words in this string."
         
 
 if __name__ == "__main__":

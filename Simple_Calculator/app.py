@@ -10,7 +10,7 @@ def home():
 def calculator():
     firstNumber = request.args.get("firstNumber", 0)
     secondNumber = request.args.get("secondNumber", 0)
-    operation = request.args.get("operation", "")
+    operation = request.args.get("operation", "").lower()
     if operation == "add":
         result = int(firstNumber) + int(secondNumber)
         return f"{int(firstNumber)} + {int(secondNumber)} = {result}"
@@ -24,13 +24,15 @@ def calculator():
     elif operation == "multiply":
         result = int(firstNumber) * int(secondNumber)
         return f"{int(firstNumber)} * {int(secondNumber)} = {result}"
-    else:
+    elif operation == "divide":
         if int(firstNumber) > int(secondNumber):
             result = int(firstNumber) / int(secondNumber)
             return f"{int(firstNumber)} / {int(secondNumber)} = {float(result)}"
         else:
             result = int(secondNumber) / int(firstNumber)
             return f"{int(secondNumber)} / {int(firstNumber)} = {float(result)}"
-        
+    else:
+        return "Invalid Operation"
+
 if __name__ == "__main__":
     app.run()
