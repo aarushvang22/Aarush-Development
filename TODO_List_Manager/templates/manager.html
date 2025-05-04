@@ -21,6 +21,9 @@
         {%for task in tasks%}
         <li>
             {{task}}
+            <form method="POST" action="{{url_for('delete', index=loop.index0)}}">
+                <button type="submit">Delete</button>
+            </form>
         </li>
         {%endfor%}
     </ol>

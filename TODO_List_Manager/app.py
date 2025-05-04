@@ -14,10 +14,9 @@ def add():
     tasks.append(task)
     return redirect(url_for('home'))
 
-@app.route("/delete", methods=["POST"])
-def delete():
-    task = request.form["task"]
-    tasks.pop(task)
+@app.route("/delete/<int:index>", methods=["POST"])
+def delete(index):
+    tasks.pop(index)
     return redirect(url_for('home'))
 
 if __name__ == "__main__":
