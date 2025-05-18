@@ -1,0 +1,19 @@
+<html>
+
+<head>
+    <title>Saved Names</title>
+ </head>
+
+<body>
+    <h2>List of Saved Names</h2>
+
+    <ul>
+        {%for person in people%}
+            <li>{{person.name}}</li>
+        {%endfor%}
+    </ul>
+
+    <a href="/">Go Back</a>
+</body>
+
+</html>
