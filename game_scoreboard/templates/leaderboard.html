@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>Saved Player Information</title>
+</head>
+
+<body>
+    <h1>Saved Player Information</h1>
+<ol>
+    {%for player_name in player_information%}
+    <li>
+        <ul>
+            <li>{{player_name.player_name}}</li>
+            <li>{{player_name.game}}</li>
+            <li>{{player_name.score}}</li>
+        </ul>
+    </li>
+    {%endfor%}
+</ol>
+
+    <a href="/">Go Back</a>
+</body>
+
+</html>
