@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, url_for, render_template, session
 app = Flask(__name__)
 
 loginInformation = {"admin": "admin123", "aarush": "aarushlovescybersecurity", "aarav": "aaravlovesIT", "harsh": "harshlovescoding"}
+
 @app.route("/")
 def home():
     return redirect(url_for("login"))
