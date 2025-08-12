@@ -1,1 +1,47 @@
+body {
+    background-color: orange;
+    font-family: Calibri;
+}
 
+h2 {
+    text-align: center;
+}
+
+#Main {
+    display: flex;
+}
+
+#Starter {
+    background-color: violet;
+    border: 1px solid white;
+    padding: 50px;
+}
+
+#Starter:hover {
+    background-color: yellow;
+}
+
+#Replit_Core {
+    background-color: grey;
+    border: 1px solid forestgreen;
+    padding: 50px;
+}
+
+#Replit_Core:hover {
+    background-color: cyan;
+}
+
+#Teams {
+    background-color: floralwhite;
+    border: 1px solid fuchsia;
+    padding: 50px;
+}
+
+#Teams:hover {
+    background-color: firebrick;
+}
+
+#Sign_Up_Button {
+    text-align: center;
+    width: 100%;
+}
