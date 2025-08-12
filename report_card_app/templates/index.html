@@ -1,33 +1,23 @@
+<!DOCTYPE html>
 <html>
+    <head>
+        <title>Report Card Generator</title>
+    </head>
 
+    <body>
+        <h1>Report Card Generator</h1>
 
-<head>
-    <title>Report Card Generator</title>
-
-
-</head>
-
-
-<body>
-    <h1>Report Card Generator</h1>
-
-    
-    <form method="POST" action="/report">
-        Name: <input name="student_name" type="text" placeholder="Student Name" required><br>
-        Roll Number: <input name="roll_number" type="number" placeholder="Roll Number" required><br>
-        
-        <h3>Total Marks for Each Subject</h3>
-        Math Marks: <input name="math" type="number" placeholder="Total Marks for Calculus" required><br>
-        Chemistry Marks: <input name="science" type="number" placeholder="Total Marks for Chemistry" required><br>
-        English Marks: <input name="english" type="number" placeholder="Total Marks for English" required><br>
-        US History Marks: <input name="social_studies" type="number" placeholder="Total Marks for US History" required><br>
-        Cybersecurity Marks: <input name="IT" type="number" placeholder="Total Marks for Cybersecurity" required><br>
-        <input type="submit" value="Generate Report">
-
-    </form>
-
-
-</body>
-
-
+        <form method="POST" action="/report">
+            Name: <input name="student_name" type="text" placeholder="Student Name" required><br>
+            Roll Number: <input name="roll_number" type="number" placeholder="Roll Number" required><br>
+            
+            <h3>Total Marks for Each Subject</h3>
+            Math Marks: <input name="math" type="number" placeholder="Total Marks for Calculus" required><br>
+            Chemistry Marks: <input name="science" type="number" placeholder="Total Marks for Chemistry" required><br>
+            English Marks: <input name="english" type="number" placeholder="Total Marks for English" required><br>
+            US History Marks: <input name="social_studies" type="number" placeholder="Total Marks for US History" required><br>
+            Cybersecurity Marks: <input name="IT" type="number" placeholder="Total Marks for Cybersecurity" required><br>
+            <input type="submit" value="Generate Report">
+        </form>
+    </body>
 </html>
