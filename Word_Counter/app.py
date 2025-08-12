@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-app = Flask("Word Counter")
+app = Flask(__name__)
 
 @app.route("/")
 def home():
@@ -13,7 +13,6 @@ def counter():
     words = text.split(" ")
     counter = len(words)
     return f"There are {counter} words in this string."
-        
 
 if __name__ == "__main__":
     app.run()
