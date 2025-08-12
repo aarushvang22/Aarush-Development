@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Click Counter</title>
 
+        <script>
+            let count = 0;
+
+            function increase() {
+                count += 1;
+                document.getElementById("Count_Display").innerText = count;
+            }
+
+            function decrease() {
+                count -= 1;
+                document.getElementById("Count_Display").innerText = count;
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1 align="center" id="Count_Display">0</h1>
+
+        <div align="center">
+            <button onclick="increase()">+</button>
+            <button onclick="decrease()">-</button>
+        </div>
+    </body>
+</html>
