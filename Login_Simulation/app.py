@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-app = Flask("Login Simulation")
+app = Flask(__name__)
 
 
 users = {
@@ -21,7 +21,7 @@ def login():
         if username in users and users[username] == password:
             return "You are logged in!"
         else:
-            return "Incorrect username of password! Try again!"
+            return "Incorrect username or password, try again!"
     else:
         print("Missing username and/or password")
 
