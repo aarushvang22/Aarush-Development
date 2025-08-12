@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ProWeather - Get Live Weather Data</title>
+    </head>
+
+    <body>
+        <h1>ProWeather - Get Live Weather Data</h1>
+
+        <div id="Current_Data">
+            <h2>Current Data</h2>
+            <form method="POST" action="/currentdata" novalidate>
+                <input align="center" type="text" placeholder="Location" id="location" required>
+                <input type="submit" value="Get Current Weather Data">
+            </form>
+        </div>
+
+        <div id="Forecast_Data">
+            <h2>Forecast Data</h2>
+            <form method="POST" action="/forecastdata" novalidate>
+                <input align="center" type="text" placeholder="Location" id="location" required>
+                <input align="center" type="number" placeholder="Number of Days" id="days" required>
+                <input type="submit" value="Get Forecast Data">
+            </form>
+        </div>
+    </body>
+</html>
