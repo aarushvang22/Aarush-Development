@@ -1,7 +1,7 @@
 import datetime
 from flask import Flask, request
 
-app = Flask("Greeting")
+app = Flask(__name__)
 
 @app.route("/")
 def home():
