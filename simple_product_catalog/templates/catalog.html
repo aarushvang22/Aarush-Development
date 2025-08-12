@@ -1,22 +1,20 @@
+<!DOCTYPE html>
 <html>
+    <head>
+        <title>Submitted Product Data</title>
+    </head>
 
-<head>
-    <title>Submitted Product Data</title>
-</head>
+    <body>
+        <h1>List of Saved Products</h1>
 
-<body>
-    <h1>List of Saved Products</h1>
+        {% for product in products %}
+            <ul>
+                <li>{{ product.product }}</li>
+                <li>{{ product.category }}</li>
+                <li>{{ product.price }}</li>
+            </ul>
+        {% endfor %}
 
-    {%for product in products%}
-        <ul>
-            <li>{{product.product}}</li>
-            <li>{{product.category}}</li>
-            <li>{{product.price}}</li>
-        </ul>
-    {%endfor%}
-
-    <a href="/">Go Back</a>
-</body>
-
-
+        <a href="/">Go Back</a>
+    </body>
 </html>
