@@ -1,0 +1,41 @@
+body {
+    background: yellow;
+    font-family: Comic Sans MS;
+}
+
+#h2-1 {
+    color: red
+    
+}
+
+#h2-1:hover {
+    color: green;
+}
+
+p {
+    border: 1px solid magenta
+}
+
+#h2-2 {
+    color: orange
+}
+
+#h2-2:hover {
+    color: purple;
+}
+
+#h2-3 {
+    color: blue
+}
+
+#h2-3:hover {
+    color: plum;
+}
+
+img {
+    width: 100%;
+}
+
+* {
+    text-align: center;
+}
