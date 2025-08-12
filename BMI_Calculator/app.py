@@ -1,6 +1,6 @@
 from flask import Flask, request
 
-app = Flask("BMI Calculator")
+app = Flask(__name__)
 
 @app.route("/")
 def home():
