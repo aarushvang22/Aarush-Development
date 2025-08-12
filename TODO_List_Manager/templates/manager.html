@@ -1,33 +1,27 @@
+<!DOCTYPE html>
 <html>
+    <head>
+        <title>TODO List Manager</title>
+    </head>
 
-<head>
-    <title>TODO List Manager</title>
+    <body>
+        <h1>TODO List Manager</h1>
+        <p>Welcome to the TODO list manager! Please add any item that you would like. If you don't like the item that you chose, you can always remove it.</p>
 
+        <form method="POST" action="/add">
+            <input name="task" type="text" placeholder="Task" required>
+            <button type="submit">Add</button>
+        </form>
 
-</head>
-
-
-
-<body>
-    <h1>TODO List Manager</h1>
-    <p>Welcome to the TODO list manager! Please add any item that you would like. If you don't like the item that you chose, you can always remove it.</p>
-
-    <form method="POST" action="/add">
-        <input name="task" type="text" placeholder="Task" required>
-        <button type="submit">Add</button>
-    </form>
-
-    <ol>
-        {%for task in tasks%}
-        <li>
-            {{task}}
-            <form method="POST" action="{{url_for('delete', index=loop.index0)}}">
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-        {%endfor%}
-    </ol>
-
-<body>
-
+        <ol>
+            {% for task in tasks %}
+            <li>
+                {{ task }}
+                <form method="POST" action="{{url_for('delete', index=loop.index0)}}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ol>
+    <body>
 </html>
