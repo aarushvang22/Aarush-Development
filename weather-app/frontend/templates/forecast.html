@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Forecast for {{ location_name }}{% endblock %}
+{% block content %}
+  <h2>Forecast for {{ location_name }} ({{ country }})</h2>
+  <p>Next {{ days }} days</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">
+    {% for d in days_payload %}
+      <div class="card" style="padding:1rem;">
+        <h3>{{ d.date }}</h3>
+        <img src="{{ d.icon_url }}" alt="{{ d.condition_text }}">
+        <p>{{ d.condition_text }}</p>
+        <p>High: {{ d.maxtemp_c }}°C · Low: {{ d.mintemp_c }}°C</p>
+        <p>Avg: {{ d.avgtemp_c }}°C</p>
+        <p>Wind: {{ d.maxwind_kph }} kph</p>
+        <p>Humidity: {{ d.avghumidity }}%</p>
+        <p>Chance of rain: {{ d.daily_chance_of_rain }}%</p>
+        <p>Sunrise: {{ d.sunrise }} / Sunset: {{ d.sunset }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="actions">
+        <a href="{{ url_for('index') }}" class="link">Search another location</a>
+  </div>
+{% endblock %}
