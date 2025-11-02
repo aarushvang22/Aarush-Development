@@ -1,1 +1,12 @@
-
+{% extends "base.html" %}
+{% block title %}ProWeather — Error{% endblock %}
+{% block content %}
+  <section class="card">
+    <div role="alert" class="alert">
+      {{ message or "Something went wrong. Please try again." }}
+    </div>
+    <div class="actions" style="margin-top: 0.5rem;">
+      <a href="{{ url_for('index') }}" class="btn" style="display:inline-block;text-align:center;">Back to search</a>
+    </div>
+  </section>
+{% endblock %}
