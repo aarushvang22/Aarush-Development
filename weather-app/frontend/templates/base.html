@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}ProWeather - Get Live Weather Information{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <h1 class="site-title"><a href="{{ url_for('index') }}">ProWeather</a></h1>
+      <p class="site-subtitle">Get live weather information</p>
+    </header>
+
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <small>Built with Flask · WeatherAPI.com</small>
+    </footer>
+  </body>
+</html>
