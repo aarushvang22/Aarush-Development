@@ -52,9 +52,6 @@ You can view a **live demo** of this app (once deployed) here:
 
 ---
 
-
----
-
 ## ⚙️ Getting Started
 
 Follow these steps to run the project locally on your machine.
@@ -81,9 +78,6 @@ Follow these steps to run the project locally on your machine.
 
 ---
 
-
----
-
 ## 🔧 Configuration
 
 1. Get your free API key from [OpenWeatherMap](https://openweathermap.org/api).
@@ -91,9 +85,6 @@ Follow these steps to run the project locally on your machine.
    ```javascript
    const API_KEY = "YOUR_API_KEY_HERE";
 3. Save the file — the app is now ready to fetch real weather data!
-
----
-
 
 ---
 
@@ -123,9 +114,6 @@ Follow these steps to run the project locally on your machine.
 
 ---
 
-
----
-
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
@@ -140,16 +128,10 @@ Please follow good commit message conventions and include screenshots when relev
 
 ---
 
-
----
-
 ## 📜 License
 
 This project is licensed under the **MIT License**.
 You are free to use, modify, and distribute it — see the [LICENSE](./LICENSE) file for details.
-
----
-
 
 ---
 
