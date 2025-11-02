@@ -1,5 +1,4 @@
 from flask import Flask, redirect, render_template, request
-from flask_sqlalchemy import SQLAlchemy
 
 import json
 import os
@@ -12,87 +11,102 @@ API_KEY = os.getenv("WEATHER_API_KEY")
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///weather.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-class Current(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    location = db.Column(db.String(100))
-    country = db.Column(db.String(100))
-    region = db.Column(db.String(100))
-    temp_c = db.Column(db.Float)
-    temp_f = db.Column(db.Float)
-    condition = db.Column(db.String(100))
-    wind_mph = db.Column(db.Float)
-    wind_dir = db.Column(db.String(100))
-    humidity = db.Column(db.Integer)
-    pressure = db.Column(db.Float)
-
-class Forecast(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    maxtemp_f = db.Column(db.Float)
-    mintemp_f = db.Column(db.Float)
-    avgtemp_f = db.Column(db.Float)
-    maxwind_mph = db.Column(db.Float)
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
 @app.route("/current", methods=["GET"])
 def current():
-    location = request.args.get("location", "")
+    location = request.args.get("location", "").strip()
+    if not location:
+        return render_template("index.html", error="Please enter a location.")
+
     url = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={location}"
-    response = requests.get(url)
-    data = json.loads(response.text)
-    return data
+    r = requests.get(url, timeout=15)
+    data = r.json()
+
+    if "error" in data:
+        msg = data["error"].get("message", "Could not fetch weather.")
+        return render_template("index.html", error=msg)
+
+    loc = data.get("location", {})
+    cur = data.get("current", {})
+
+    payload = {
+        "location_name": loc.get("name", location),
+        "region": loc.get("region", ""),
+        "country": loc.get("country", ""),
+        "last_updated": cur.get("last_updated", "just now"),
+        "temp_c": round(float(cur.get("temp_c", 0))),
+        "feelslike_c": round(float(cur.get("feelslike_c", 0))),
+        "condition_text": cur.get("condition", {}).get("text", "N/A"),
+        "icon_url": ("https:" + cur.get("condition", {}).get("icon", "")) if cur.get("condition") else "",
+        "humidity": cur.get("humidity", 0),
+        "wind_kph": cur.get("wind_kph", 0),
+    }
+    return render_template("result.html", **payload)
+
 
 @app.route("/forecast", methods=["GET"])
 def forecast():
-    location = request.args.get("location", "")
-    days = request.args.get("days", type=int)
-    url = f"http://api.weatherapi.com/v1/forecast.json?key={API_KEY}&q={location}&days={days}"
-    response = requests.get(url)
-    data = json.loads(response.text)
-    return data
+    location = (request.args.get("location") or "").strip()
+    days_param = request.args.get("days", type=int) or 3  # default 3
 
-@app.route("/currentdata", methods=["POST"])
-def current_data():
-    location = request.form["location"]
-    country = request.form["country"]
-    region = request.form["region"]
-    temp_c = request.form["temp_c"]
-    temp_f = request.form["temp_f"]
-    conditon = request.form["condition"]
-    wind_mph = request.form["wind_mph"]
-    wind_dir = request.form["wind_dir"]
-    humidity = request.form["humidity"]
-    pressure = request.form["pressure"]
-    weather_data = Current(location=location, country=country, region=region, temp_c=temp_c, temp_f=temp_f, conditon=conditon, wind_mph=wind_mph, wind_dir=wind_dir, humidity=humidity, pressure=pressure)
-    db.session.add(weather_data)
-    db.session.commit()
-    return redirect("/results")
+    if not location:
+        return render_template("index.html", error="Please enter a location for forecast.")
+    if days_param < 1 or days_param > 10:
+        return render_template("index.html", error="Days must be between 1 and 10.")
 
-@app.route("/forecastdata", methods=["POST"])
-def forecast_data():
-    maxtemp_f = request.form["maxtemp_f"]
-    mintemp_f = request.form["mintemp_f"]
-    avgtemp_f = request.form["avgtemp_f"]
-    maxwind_mph = request.form["maxwind_mph"]
-    weather_data = Forecast(maxtemp_f=maxtemp_f, mintemp_f=mintemp_f, avgtemp_f=avgtemp_f, maxwind_mph=maxwind_mph)
-    db.session.add(weather_data)
-    db.session.commit()
-    return redirect("/results")
+    url = "http://api.weatherapi.com/v1/forecast.json"
+    r = requests.get(url, params={
+        "key": API_KEY,
+        "q": location,
+        "days": days_param,
+        "aqi": "no",
+        "alerts": "no"
+    }, timeout=15)
+    data = r.json()
 
-@app.route("/results")
-def results():
-    current_weather_data = Current.query.all()
-    forecast_weather_data = Forecast.query.all()
-    return render_template("result.html", current_weather_data=current_weather_data, forecast_weather_data=forecast_weather_data)
+    # Handle API errors
+    if "error" in data:
+        msg = data["error"].get("message", "Could not fetch forecast.")
+        return render_template("index.html", error=msg)
+
+    loc = data.get("location", {}) or {}
+    forecast_days = (data.get("forecast", {}) or {}).get("forecastday", []) or []
+
+    # Build normalized list of days for the template
+    days_payload = []
+    for d in forecast_days:
+        day = d.get("day", {}) or {}
+        astro = d.get("astro", {}) or {}
+        cond = (day.get("condition", {}) or {})
+
+        days_payload.append({
+            "date": d.get("date", ""),
+            "maxtemp_c": round(float(day.get("maxtemp_c", 0))),
+            "mintemp_c": round(float(day.get("mintemp_c", 0))),
+            "avgtemp_c": round(float(day.get("avgtemp_c", 0))),
+            "maxwind_kph": day.get("maxwind_kph", 0),
+            "avghumidity": day.get("avghumidity", 0),
+            "daily_chance_of_rain": day.get("daily_chance_of_rain", 0),
+            "condition_text": cond.get("text", "N/A"),
+            "icon_url": ("https:" + cond.get("icon", "")) if cond.get("icon") else "",
+            "sunrise": astro.get("sunrise", ""),
+            "sunset": astro.get("sunset", ""),
+        })
+
+    payload = {
+        "query_location": location,
+        "location_name": loc.get("name", location),
+        "region": loc.get("region", ""),
+        "country": loc.get("country", ""),
+        "days": days_param,
+        "days_payload": days_payload,
+    }
+
+    return render_template("forecast.html", **payload)
+
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run()
