@@ -1,27 +1,45 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>ProWeather - Get Live Weather Data</title>
-    </head>
+{% extends "base.html" %}
+{% block title %}ProWeather — Search{% endblock %}
+{% block content %}
+  {% if error %}
+    <div role="alert" class="alert">{{ error }}</div>
+  {% endif %}
 
-    <body>
-        <h1>ProWeather - Get Live Weather Data</h1>
+  <form class="card" method="GET" action="{{ url_for('current') }}" novalidate>
+    <label for="location" class="label">Location</label>
+    <input
+      type="text"
+      id="location"
+      name="location"
+      placeholder="e.g., Kolkata, London, 10001"
+      required
+      autocomplete="off"
+      class="input"
+    />
+    <button type="submit" class="btn">Get current weather</button>
+  </form>
 
-        <div id="Current_Data">
-            <h2>Current Data</h2>
-            <form method="POST" action="/currentdata" novalidate>
-                <input align="center" type="text" placeholder="Location" id="location" required>
-                <input type="submit" value="Get Current Weather Data">
-            </form>
-        </div>
-
-        <div id="Forecast_Data">
-            <h2>Forecast Data</h2>
-            <form method="POST" action="/forecastdata" novalidate>
-                <input align="center" type="text" placeholder="Location" id="location" required>
-                <input align="center" type="number" placeholder="Number of Days" id="days" required>
-                <input type="submit" value="Get Forecast Data">
-            </form>
-        </div>
-    </body>
-</html>
+  <form class="card" method="GET" action="{{ url_for('forecast') }}" novalidate>
+    <label for="location" class="label">Location</label>
+    <input
+      type="text"
+      id="location"
+      name="location"
+      placeholder="e.g., Kolkata, London, 10001"
+      required
+      autocomplete="off"
+      class="input"
+    />
+    <label for="days" class="label">Number of Days</label>
+    <input
+      type="number"
+      id="days"
+      name="days"
+      placeholder="Enter how many days you want to see weather data in this location"
+      required
+      autocomplete="off"
+      class="input"
+    />
+    <button type="submit" class="btn">Get forecast weather</button>
+  </form>
+{% endblock %}
