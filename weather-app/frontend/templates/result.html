@@ -1,1 +1,35 @@
+{% extends "base.html" %}
+{% block title %}ProWeather — {{ location_name }}{% endblock %}
+{% block content %}
 
+  <div class="Current">
+    <section class="card weather-card">
+      <div class="weather-header">
+        <div>
+          <h2 class="location">{{ location_name }}</h2>
+          <p class="muted">
+            {{ region }}{% if region %}, {% endif %}{{ country }}
+            · Updated {{ last_updated }}
+          </p>
+        </div>
+        {% if icon_url %}
+          <img src="{{ icon_url }}" alt="{{ condition_text }}" class="icon">
+        {% endif %}
+      </div>
+
+      <div class="weather-body">
+        <div class="temp">{{ temp_c }}°C</div>
+        <div class="condition">{{ condition_text }}</div>
+        <ul class="stats">
+          <li><span class="stat-label">Humidity</span><span class="stat-value">{{ humidity }}%</span></li>
+          <li><span class="stat-label">Wind</span><span class="stat-value">{{ wind_kph }} kph</span></li>
+          <li><span class="stat-label">Feels like</span><span class="stat-value">{{ feelslike_c }}°C</span></li>
+        </ul>
+      </div>
+
+      <div class="actions">
+        <a href="{{ url_for('index') }}" class="link">Search another location</a>
+      </div>
+    </section>
+  </div>
+{% endblock %}
